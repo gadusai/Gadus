@@ -1,0 +1,1 @@
+{"version":3,"file":"gadusMessage.d.ts","sourceRoot":"","sources":["../../../src/generated/types/gadusMessage.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AACH,OAAO,KAAK,EAAE,gBAAgB,EAAE,MAAM,oBAAoB,CAAC;AAE3D,MAAM,WAAW,YAAY;IAC3B,EAAE,EAAE,MAAM,CAAC;IACX,cAAc,EAAE,MAAM,CAAC;IACvB,IAAI,EAAE,gBAAgB,CAAC;IACvB,OAAO,EAAE,MAAM,CAAC;IAChB,SAAS,EAAE,IAAI,CAAC;CACjB"}

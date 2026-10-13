@@ -1,0 +1,287 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: gadus
+    description: Gadus assistant workspace
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /gadus/summary:
+    get:
+      operationId: getGadusSummary
+      tags: [gadus]
+      summary: Get the personalized Gadus dashboard summary
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GadusSummary"
+  /gadus/modes:
+    get:
+      operationId: listGadusModes
+      tags: [gadus]
+      summary: List Gadus assistant modes
+      responses:
+        "200":
+          description: Available modes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GadusMode"
+  /gadus/conversations:
+    get:
+      operationId: listGadusConversations
+      tags: [gadus]
+      summary: List recent Gadus conversations
+      responses:
+        "200":
+          description: Conversations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GadusConversation"
+    post:
+      operationId: createGadusConversation
+      tags: [gadus]
+      summary: Create a Gadus conversation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GadusConversationInput"
+      responses:
+        "201":
+          description: Conversation created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GadusConversation"
+  /gadus/conversations/{conversationId}/messages:
+    get:
+      operationId: listGadusMessages
+      tags: [gadus]
+      summary: List messages in a Gadus conversation
+      parameters:
+        - $ref: "#/components/parameters/ConversationId"
+      responses:
+        "200":
+          description: Conversation messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GadusMessage"
+    post:
+      operationId: createGadusMessage
+      tags: [gadus]
+      summary: Add a message to a Gadus conversation
+      parameters:
+        - $ref: "#/components/parameters/ConversationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GadusMessageInput"
+      responses:
+        "201":
+          description: Message created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GadusMessage"
+  /gadus/chat/stream:
+    post:
+      operationId: streamGadusChat
+      tags: [gadus]
+      summary: Stream a Gadus response
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GadusChatStreamInput"
+      responses:
+        "200":
+          description: Server-sent events containing streamed response tokens
+          content:
+            text/event-stream:
+              schema:
+                type: string
+  /gadus/prompts:
+    get:
+      operationId: listGadusPrompts
+      tags: [gadus]
+      summary: List the Gadus prompt library
+      responses:
+        "200":
+          description: Prompt library
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GadusPrompt"
+  /gadus/studio/assets:
+    get:
+      operationId: listGadusStudioAssets
+      tags: [gadus]
+      summary: List generated Gadus studio assets
+      parameters:
+        - name: kind
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [image, video]
+      responses:
+        "200":
+          description: Generated assets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GadusStudioAsset"
+components:
+  parameters:
+    ConversationId:
+      name: conversationId
+      in: path
+      required: true
+      schema:
+        type: integer
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    GadusMode:
+      type: object
+      required: [id, name, description, icon, accent]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        description: { type: string }
+        icon: { type: string }
+        accent: { type: string }
+    GadusSummary:
+      type: object
+      required: [userName, conversations, messages, images, videos, files, tip, goals]
+      properties:
+        userName: { type: string }
+        conversations: { type: integer }
+        messages: { type: integer }
+        images: { type: integer }
+        videos: { type: integer }
+        files: { type: integer }
+        mostUsedMode: { type: string }
+        tip: { type: string }
+        goals:
+          type: array
+          items:
+            $ref: "#/components/schemas/GadusGoal"
+    GadusGoal:
+      type: object
+      required: [label, progress, target]
+      properties:
+        label: { type: string }
+        progress: { type: integer }
+        target: { type: integer }
+    GadusConversation:
+      type: object
+      required: [id, title, modeId, modeName, preview, messageCount, updatedAt, starred]
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        modeId: { type: string }
+        modeName: { type: string }
+        preview: { type: string }
+        messageCount: { type: integer }
+        updatedAt: { type: string, format: date-time }
+        starred: { type: boolean }
+    GadusConversationInput:
+      type: object
+      required: [modeId, title]
+      properties:
+        modeId: { type: string }
+        title: { type: string, minLength: 1 }
+    GadusMessage:
+      type: object
+      required: [id, conversationId, role, content, createdAt]
+      properties:
+        id: { type: integer }
+        conversationId: { type: integer }
+        role:
+          type: string
+          enum: [user, assistant]
+        content: { type: string }
+        createdAt: { type: string, format: date-time }
+    GadusMessageInput:
+      type: object
+      required: [role, content]
+      properties:
+        role:
+          type: string
+          enum: [user, assistant]
+        content: { type: string, minLength: 1 }
+    GadusChatStreamInput:
+      type: object
+      required: [conversationId, modeId]
+      properties:
+        conversationId: { type: integer }
+        modeId: { type: string }
+    GadusPrompt:
+      type: object
+      required: [id, title, category, prompt, tag]
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        category: { type: string }
+        prompt: { type: string }
+        tag: { type: string }
+    GadusStudioAsset:
+      type: object
+      required: [id, kind, title, prompt, url, createdAt, favorite]
+      properties:
+        id: { type: integer }
+        kind:
+          type: string
+          enum: [image, video]
+        title: { type: string }
+        prompt: { type: string }
+        url: { type: string }
+        createdAt: { type: string, format: date-time }
+        favorite: { type: boolean }
+
