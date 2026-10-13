@@ -1,0 +1,2 @@
+- [Groq output limits](groq-output-limits.md) — keep streamed completion caps within the active account’s output-token-per-minute allowance.
+- [Creative provider boundaries](creative-provider-boundaries.md) — keep provider calls server-side and expose friendly, recoverable UI states for media generation.
