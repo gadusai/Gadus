@@ -1,0 +1,170 @@
+Fix every single broken button in the entire Gadus application, give Gadus full real time internet browsing access across all 12 modes, fix image generation completely, fix video generation completely, and give Gadus every capability that Grok, Gemini, and ChatGPT have. Everything must be fixed and working perfectly in one complete update.
+
+PART 1 — FIX ALL BROKEN BUTTONS:
+
+Go through the entire codebase file by file and identify every button that has a missing onClick handler, an empty onClick handler, an onClick handler that calls a function that does not exist, an onClick handler that calls a function that is defined but never implemented, a button that is disabled when it should not be, a button that has CSS pointer-events none blocking clicks, a button covered by another invisible element blocking clicks, a button that throws an error when clicked causing it to silently fail, and a button connected to a state variable that was never initialized. Fix every single one without exception.
+
+Fix the send message button so it sends every time without fail. Fix the microphone voice button so it activates voice recording. Fix the camera button so it opens the camera view centered perfectly on screen. Fix the stop generation button so it cancels the AI response stream. Fix the clear chat button. Fix the copy to clipboard button on every AI response. Fix the download conversation button. Fix the regenerate response button. Fix the thumbs up and thumbs down feedback buttons. Fix every single mode button in the sidebar so clicking any mode switches instantly. Fix the collapse sidebar button. Fix the new conversation button. Fix all conversation history items. Fix the search conversations button. Fix the settings button. Fix the user profile button. Fix the logout button. Fix the generate image button. Fix all image style preset buttons. Fix the regenerate button on images. Fix the download button under each image. Fix the favorite button on images. Fix the generate video button. Fix all video style buttons. Fix the aspect ratio selector buttons. Fix the download button on videos. Fix every toggle switch in settings. Fix the save settings button. Fix the clear history button. Fix the export data button. Fix all dashboard quick start cards. Fix the pin button on conversations. Fix the rename button. Fix the star button. Fix the share button. Fix the delete button. Fix bulk select and bulk delete. Fix the export conversation button. Fix the file upload button. Fix the remove file button. Fix the analyze file button. Fix every confirm button inside every dialog and modal. Fix every cancel button. Fix every close button on every modal panel and drawer.
+
+Fix all missing function implementations where any button calls an empty function or has a TODO comment or console.log as a placeholder. Fix all missing state initializations. Fix all missing imports. Fix all event propagation issues. Fix all async errors by wrapping in try catch blocks. Fix all CSS blocking issues. Fix all incorrectly disabled buttons. Fix all TypeScript errors on button handlers.
+
+Every button must show a hover state. Every button must show a pressed state scaling down slightly when clicked. Every button triggering a slow action must show a loading spinner and disable itself during processing. Every successful action shows a brief green checkmark flash. Every failed action shows a red shake animation.
+
+PART 2 — FIX IMAGE GENERATION COMPLETELY:
+
+Remove every existing image generation implementation in the entire codebase and replace it completely with a brand new bulletproof image generation system using Pollinations AI as the primary provider with multiple fallback providers so images always generate successfully every single time without ever saying please try again later.
+
+PRIMARY IMAGE PROVIDER — POLLINATIONS AI:
+Build image generation using this exact URL structure:
+https://image.pollinations.ai/prompt/{encoded_prompt}?width=1024&height=1024&model=flux&seed={random_seed}&nologo=true&enhance=true
+
+Always URL encode the prompt properly before inserting it into the URL. Always generate a random seed number between 1 and 999999 for every single generation so every image is unique and original. Always set nologo to true to remove watermarks. Always set enhance to true so Pollinations automatically improves prompt quality.
+
+SECONDARY IMAGE PROVIDER — FALLBACK:
+If Pollinations fails for any reason immediately try this alternative Pollinations endpoint:
+https://image.pollinations.ai/prompt/{encoded_prompt}?width=1024&height=1024&model=flux-realism&seed={new_random_seed}&nologo=true
+
+THIRD IMAGE PROVIDER — SECOND FALLBACK:
+If the second attempt fails try:
+https://image.pollinations.ai/prompt/{encoded_prompt}?width=512&height=512&model=flux&seed={new_random_seed}&nologo=true
+
+AUTOMATIC RETRY SYSTEM:
+Implement automatic retry logic that tries up to 8 times with a different random seed each time and a 2 second wait between attempts. Never show any error message to the user during retries. Never say please try again later under any circumstances. If all 8 attempts fail show only this friendly message: Gadus is warming up the image engine, your image will be ready in just a moment and then keep retrying silently in the background every 5 seconds until it succeeds.
+
+AUTO PROMPT ENHANCEMENT:
+Before sending any prompt to Pollinations automatically add these quality enhancement words to the end of every prompt behind the scenes without the user seeing: highly detailed, 8K resolution, professional quality, perfect lighting, ultra realistic, masterpiece, sharp focus, vivid colors, award winning photography. Also automatically add this negative guidance to avoid: blurry, distorted, low quality, watermark, ugly, deformed, duplicate, bad anatomy, worst quality.
+
+GENERATE 4 VARIATIONS:
+For every single image request call Pollinations 4 times simultaneously using Promise.all with 4 different random seeds. Display all 4 generated images in a beautiful 2 by 2 grid layout with smooth fade in animation as each image loads. Each image in the grid must have a download button, a regenerate button for that specific image, a favorite button, and an expand button to view full size. If the screen is mobile display images in a single column instead of 2 by 2.
+
+IMAGE STYLE PRESETS:
+Add these clickable style preset buttons above the image input that the user can select before generating. When clicked each preset automatically adds the correct professional style words to the prompt before sending to Pollinations:
+
+Photorealistic adds: photorealistic, hyperrealistic, DSLR photography, 85mm lens, natural lighting, ultra detailed skin texture, professional photograph.
+Cinematic Film adds: cinematic, movie still, anamorphic lens, film grain, dramatic lighting, director of photography, Hollywood production quality, 35mm film.
+Anime adds: anime style, manga illustration, Studio Ghibli inspired, vibrant colors, clean line art, Japanese animation, detailed background.
+Oil Painting adds: oil painting, classical art style, rich textures, impasto technique, museum quality, old masters technique, canvas texture visible.
+Watercolor adds: watercolor painting, soft edges, transparent layers, artistic, delicate brushstrokes, paper texture, flowing colors.
+Pencil Sketch adds: pencil sketch, graphite drawing, detailed line work, hatching and crosshatching, hand drawn, professional illustration.
+3D Render adds: 3D render, octane render, cinema 4D, ray tracing, subsurface scattering, physically based rendering, studio lighting.
+Cyberpunk adds: cyberpunk, neon lights, futuristic city, rain reflections, dystopian, high tech low life, blade runner aesthetic, purple and blue neons.
+Fantasy Art adds: fantasy art, magical atmosphere, epic scene, detailed environment, mystical lighting, concept art, game art quality.
+Studio Portrait adds: studio portrait, professional headshot, softbox lighting, clean background, sharp focus on face, commercial photography.
+Architecture adds: architectural visualization, photorealistic building render, natural lighting, landscape integration, professional architectural photography.
+Product Photography adds: product photography, white background, studio lighting, commercial grade, crisp sharp details, advertising quality.
+Comic Book adds: comic book style, bold outlines, flat colors, halftone dots, action lines, Marvel and DC style illustration.
+Neon Art adds: neon art, glowing colors, dark background, light painting, vibrant luminescent colors, long exposure effect.
+Vintage Film adds: vintage film photography, grain texture, faded colors, lomography, retro aesthetic, 1970s film look.
+
+ADVANCED PROMPT BUILDER:
+Add an advanced prompt builder panel that slides out when user clicks a build prompt button. The panel has dropdown selectors for Subject, Environment or Background, Lighting Style, Camera Angle, Art Style, Color Mood, Time of Day, and Weather. When the user fills in any dropdowns Gadus automatically combines all selections into one perfect professional generation prompt in real time and shows the combined prompt in a preview text box. User can click generate directly from this panel.
+
+SMART PROMPT ENHANCER:
+When a user types a simple short description like a dog or sunset Gadus automatically detects it is too simple and expands it into a rich detailed generation prompt before sending to Pollinations. Show the user both their original simple description and the enhanced prompt that Gadus actually used underneath the generated images with a label saying Enhanced prompt used.
+
+IMAGE STUDIO TAB:
+Add a dedicated Image Studio tab in the sidebar. This tab shows a beautiful gallery of every single image ever generated in Gadus organized by date with newest first. Each image in the gallery shows the prompt used, the date generated, and buttons to download, regenerate, share, and delete. Add a Favorites section at the top showing all starred images. Add a search bar to search through past image prompts. Add a download all button to download all generated images as a zip file.
+
+GENERATION STATUS:
+Add a live status indicator in the image studio showing whether Pollinations AI is currently online and responding. Show a green dot with text Image Engine Online when working and a yellow dot with text Switching to backup engine when retrying.
+
+PART 3 — FIX VIDEO GENERATION COMPLETELY:
+
+Remove every existing video generation implementation and replace it completely with a new bulletproof system using Replicate API exclusively.
+
+REPLICATE VIDEO SETUP:
+Use the REPLICATE_API_TOKEN environment variable. Use the minimax/video-01 model as the primary video model for highest quality output. Build the complete Replicate polling workflow correctly as follows.
+
+Step one: Send a POST request to https://api.replicate.com/v1/predictions with the Authorization header using the REPLICATE_API_TOKEN, Content-Type of application/json, and a body containing the version of the minimax/video-01 model and the input prompt. This returns a prediction object with an id field.
+
+Step two: Take the prediction id and poll the endpoint https://api.replicate.com/v1/predictions/{id} every 3 seconds using setInterval. Check the status field in the response. If status is starting or processing keep polling. If status is succeeded stop polling and extract the output URL from the response. If status is failed stop polling and retry the entire generation with a new request.
+
+Step three: When the output URL is available display the video directly inside the chat conversation using an HTML5 video element with controls, autoplay muted, loop, and playsinline attributes. Set the video source to the output URL. Show a poster thumbnail while the video loads.
+
+VIDEO LOADING EXPERIENCE:
+While the video is generating show a beautiful full animated loading experience inside the chat. Show the Gadus logo spinning slowly. Show an animated progress bar that fills from 0 to 99 percent gradually over the expected generation time. Show the message Gadus is directing your video with a changing subtitle that cycles through: Writing the scene, Setting up the camera, Rendering the frames, Adding cinematic effects, Almost ready. Show the elapsed time counting up. This makes the wait feel engaging rather than frustrating.
+
+VIDEO STYLE OPTIONS:
+Add these clickable style buttons the user selects before generating a video. Each style adds professional quality words to the prompt automatically:
+Cinematic adds: cinematic quality, professional cinematography, smooth camera movement, film grain, color graded, Hollywood production quality.
+Animation adds: smooth animation, high quality render, fluid motion, professional animation studio quality.
+Slow Motion adds: slow motion, high frame rate, smooth slow motion effect, dramatic timing.
+Documentary adds: documentary style, handheld camera, natural lighting, realistic, journalistic quality.
+Music Video adds: music video aesthetic, dynamic cuts, vibrant colors, energetic, professional production.
+Product Showcase adds: product showcase, clean background, professional lighting, commercial quality, brand focused.
+Nature Film adds: nature documentary, David Attenborough style, natural lighting, wildlife photography quality.
+Dreamy adds: dreamy atmosphere, soft focus, ethereal lighting, dreamlike quality, soft pastel colors.
+
+VIDEO ASPECT RATIO:
+Add three aspect ratio buttons the user selects before generating:
+Landscape 16 by 9 for YouTube and standard video.
+Portrait 9 by 16 for TikTok and Instagram Reels.
+Square 1 by 1 for Instagram feed posts.
+
+SMART VIDEO PROMPT ENHANCER:
+Automatically expand simple video descriptions into rich cinematic prompts before sending to Replicate. For example if user types sunset over ocean automatically enhance it to golden hour sunset over calm ocean waves, cinematic drone shot slowly pulling back revealing the horizon, warm orange and pink sky perfectly reflected on still water surface, ultra high definition, smooth professional camera movement, cinematic color grading, breathtaking natural beauty. Show the user both their original description and the enhanced prompt used.
+
+VIDEO STUDIO TAB:
+Add a dedicated Video Studio tab in the sidebar showing a gallery of every video ever generated in Gadus. Each video shows a thumbnail, the prompt used, the date generated, and buttons to play, download, regenerate, and delete. Add a search bar to search through past video prompts.
+
+VIDEO ERROR HANDLING:
+If Replicate API fails or returns an error never show a technical error to the user. Show only: Gadus is still working on your video, checking progress now and automatically retry the generation in the background. If the REPLICATE_API_TOKEN is missing or invalid show a friendly setup message.
+
+PART 4 — GIVE GADUS FULL REAL TIME INTERNET BROWSING ACROSS ALL 12 MODES:
+
+Remove completely and permanently every single piece of code, message, response, system prompt instruction, or logic anywhere in the entire codebase that causes Gadus to say it cannot access the internet, it does not have real time information, its knowledge has a cutoff date, it cannot browse the web, or any similar refusal. Delete every instance of these refusals entirely. Gadus must never say any of these things ever again under any circumstances whatsoever.
+
+INTERNET SEARCH IMPLEMENTATION:
+Build a web search system using the DuckDuckGo instant answer API at https://api.duckduckgo.com/?q={encoded_query}&format=json&no_html=1&skip_disambig=1 which is completely free and requires no API key. Also integrate the Wikipedia REST API at https://en.wikipedia.org/api/rest_v1/page/summary/{topic} for factual encyclopedic information. Also fetch from RSS feeds of major news sources including BBC News at http://feeds.bbci.co.uk/news/rss.xml, Reuters, and Associated Press for current news. Also use the Open-Meteo weather API at https://api.open-meteo.com/v1/forecast for weather data which is completely free. Also use the CoinGecko API at https://api.coingecko.com/api/v3/simple/price for crypto prices which is free. Also use Yahoo Finance RSS for stock market news. Combine all these free sources to give Gadus comprehensive real time internet access with zero additional cost.
+
+AUTOMATIC INTERNET DETECTION — ALL 12 MODES:
+Build an intent detection system that automatically identifies when any user message in any of the 12 modes requires current internet information and immediately searches the web without the user needing to ask. Gadus must automatically search when the user asks about anything happening recently, today, this week, this month, or this year. Search automatically for current news and breaking news. Search for current prices of stocks, crypto, products, or services. Search for sports scores, match results, standings, and fixtures. Search for weather anywhere in the world. Search for information about any person, company, brand, or organization. Search for any product or technology released recently. Search to fact check any claim or statement. Search for trending topics. Search whenever given any URL to read and summarize. Search whenever the answer might have changed since training data.
+
+BROWSING INDICATOR:
+While Gadus is searching show a small animated indicator in the chat. Show a pulsing green globe icon with the text Gadus is searching the web. This disappears automatically once results are ready and Gadus begins responding.
+
+SOURCE CITATIONS:
+Every time Gadus uses internet information show a Sources section at the bottom of the response listing each website name, the clickable URL, and the date accessed. Sources must open in a new browser tab.
+
+URL READING:
+When a user pastes any URL into the chat Gadus automatically fetches and reads the full content of that page using a CORS proxy if needed. Gadus then summarizes the content and answers any questions about it.
+
+OFFLINE FALLBACK:
+If internet search fails for any reason Gadus silently falls back to training knowledge, answers as best it can, and adds a small note: Note — Gadus could not retrieve live data at this moment. This answer is based on the most recent available information. Then Gadus retries the search automatically.
+
+PART 5 — GIVE GADUS EVERY CAPABILITY OF GROK GEMINI AND CHATGPT:
+
+Gadus must match and exceed every capability of Grok, Gemini, and ChatGPT combined. Implement every feature below completely.
+
+Deep Multimodal Understanding:
+Gadus understands and analyzes images uploaded by users with the same depth as GPT-4 Vision. When an image is uploaded Gadus describes every detail, reads all text in the image using OCR, identifies objects, people, emotions, scenes, brands, and anything else visible. Gadus answers any question about uploaded images intelligently and accurately.
+
+Advanced Code Intelligence:
+Gadus writes production ready code in every programming language. Gadus debugs entire codebases by reading error logs. Gadus explains code line by line. Gadus refactors messy code into clean professional code. Gadus builds complete applications from a single description. Gadus reviews code for security vulnerabilities. Gadus writes complete test suites. Gadus has a built in code editor with syntax highlighting inside the chat interface.
+
+Long Document Analysis:
+Gadus reads and analyzes extremely long documents, books, legal contracts, research papers, and reports. Gadus answers specific questions about any part of a long document. Gadus compares multiple documents and finds differences. Gadus extracts specific data points from complex documents.
+
+Mathematical and Scientific Reasoning:
+Gadus solves complex mathematical problems showing all working steps. Gadus handles calculus, linear algebra, statistics, and advanced mathematics. Gadus explains scientific concepts at any level from beginner to expert. Gadus interprets scientific papers and explains findings in plain language.
+
+Multilingual Intelligence:
+Gadus communicates fluently in every major world language. Gadus automatically detects what language the user is writing in and responds in that same language. Gadus translates any text between any languages with perfect accuracy and cultural nuance. Gadus teaches foreign languages with grammar explanations, vocabulary, and conversation practice.
+
+Advanced Reasoning and Analysis:
+Gadus thinks through complex problems step by step showing its reasoning process. Gadus considers multiple perspectives on any topic. Gadus identifies logical fallacies and incorrect assumptions. Gadus provides balanced analysis of controversial topics. Gadus gives confidence levels on its answers.
+
+Creative Intelligence at Expert Level:
+Gadus writes novels, screenplays, poetry, song lyrics, speeches, and any creative content at a professional publishing quality level. Gadus maintains consistent characters, plot threads, and writing style across long creative works. Gadus generates creative ideas, concepts, and innovations on demand.
+
+Personalized AI Behavior:
+Gadus learns each user's communication style over time and adapts to match it. Gadus remembers the user's profession, interests, ongoing projects, and preferences across all sessions. Gadus proactively offers relevant suggestions based on what it knows about the user. Gadus adjusts its vocabulary and explanation depth based on the user's expertise level.
+
+Real Time Data and Analysis:
+Gadus accesses and analyzes real time financial data, news, sports, weather, and any live information. Gadus tracks topics the user cares about and proactively alerts them to relevant updates. Gadus generates charts and visualizations from live data.
+
+Autonomous Task Execution:
+Gadus breaks any complex task into steps, executes each step autonomously, monitors its own progress, and delivers a complete finished result. Gadus can chain multiple capabilities together — for example searching the web, reading the results, analyzing the data, and producing a formatted report all in one autonomous workflow without the user needing to guide each step.
+
+FINAL SYSTEM INSTRUCTIONS:
+After implementing every fix and every feature described above go through the complete Gadus application systematically and test every single button by clicking it and confirming it works perfectly. Test image generation by generating images in every style preset and confirming 4 variations appear every time. Test video generation by generating a video and confirming the loading animation shows and the video plays when ready. Test internet browsing by asking questions about today's news, current weather, latest sports scores, and current crypto prices across every single one of the 12 modes and confirm Gadus searches automatically, shows the browsing indicator, returns accurate current information, and cites sources. Confirm Gadus never says it cannot access the internet. Confirm Gadus never says please try again later for images. Confirm Gadus never shows a technical error to users. Every single feature must work perfectly and Gadus must feel like the most powerful AI platform any user has ever experienced
